@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+void Hanoi(int n, char from, char to, char by) {
+    if (n == 1)
+        cout << "Move : " << from << " -> " << to << endl;
+    else {
+        Hanoi(n - 1, from, by, to);
+        cout << "Move : " << from << " -> " << to << endl; 
+        Hanoi(n - 1, by, to, from); 
+    }
+}
+
+int main() {
+    int n;
+    cout << "원판 개수 입력: ";
+    cin >> n;
+
+    Hanoi(n, 'A', 'C', 'B'); 
+    return 0;
+}
