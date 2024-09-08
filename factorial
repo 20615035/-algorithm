@@ -1,0 +1,42 @@
+//반복문 이용
+#include <iostream>
+
+long Factorial(long f) {
+    if (f == 1)
+        return 1;
+    else
+        return Factorial(f - 1) * f;
+}
+
+int main() {
+    long num;
+    std::cout << "숫자 입력: ";
+    std::cin >> num;
+
+    std::cout  << num << "의 팩토리얼:  " << Factorial(num) << std::endl;
+
+    return 0;
+}
+
+
+//재귀적 방법 이용
+#include <iostream>
+
+long Factorial(long f) {
+    long fact = 1;
+    for (int i = 2; i <= f; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+int main() {
+    long num;
+    std::cout << "숫자 입력: ";
+    std::cin >> num;
+
+    std::cout << num << "의 팩토리얼:  " << Factorial(num) << std::endl;
+
+    return 0;
+}
+
