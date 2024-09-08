@@ -1,0 +1,25 @@
+#include <iostream>
+
+int Fibonacci(int i) {
+    if (i == 1 || i == 2)
+        return 1;
+    else
+        return Fibonacci(i - 1) + Fibonacci(i - 2);
+}
+
+int main() {
+    int n;
+    std::cout << "숫자 입력: ";
+    std::cin >> n;
+
+    std::cout << "계산 값: ";
+    for (int i = 1; i <= n; ++i) {
+        std::cout << Fibonacci(i);
+        if (i < n) {
+            std::cout << ", ";
+        }
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
