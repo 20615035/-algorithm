@@ -32,7 +32,7 @@ int main() {
     }
     cout << endl;
 
-    cout << "Execution time: " << duration.count() << " milliseconds" << endl;
+    cout << "실행시간: " << duration.count() << " ms" << endl;
 
     return 0;
 }
