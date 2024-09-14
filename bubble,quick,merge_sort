@@ -1,0 +1,123 @@
+#include <iostream> 
+#include <chrono>   
+
+using namespace std;
+
+void BubbleSortFunc(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void Merge(int list[], int left, int mid, int right, int sorted[]) {
+    int i = left, j = mid + 1, k = left;
+    while (i <= mid && j <= right) {
+        if (list[i] <= list[j])
+            sorted[k++] = list[i++];
+        else
+            sorted[k++] = list[j++];
+    }
+
+    if (i > mid) {
+        while (j <= right)
+            sorted[k++] = list[j++];
+    }
+    else {
+        while (i <= mid)
+            sorted[k++] = list[i++];
+    }
+
+    for (int l = left; l <= right; l++) {
+        list[l] = sorted[l];
+    }
+}
+
+void MergeSort(int list[], int left, int right, int sorted[]) {
+    if (left < right) {
+        int mid = (left + right) / 2;
+        MergeSort(list, left, mid, sorted);
+        MergeSort(list, mid + 1, right, sorted);
+        Merge(list, left, mid, right, sorted);
+    }
+}
+
+void Swap(int list[], int index1, int index2) {
+    int tmp = list[index1];
+    list[index1] = list[index2];
+    list[index2] = tmp;
+}
+
+int Partition(int list[], int left, int right) {
+    int low = left + 1;
+    int high = right;
+    int pivot = list[left];
+
+    while (low <= high) {
+        while (low <= right && list[low] < pivot) low++;
+        while (high >= left && list[high] > pivot) high--;
+
+        if (low < high) {
+            Swap(list, low, high);
+        }
+    }
+
+    Swap(list, left, high);
+    return high;
+}
+
+void QuickSort(int list[], int left, int right) {
+    if (left < right) {
+        int q = Partition(list, left, right);
+        QuickSort(list, left, q - 1);
+        QuickSort(list, q + 1, right);
+    }
+}
+
+int main() {
+    int arr[] = { 5, 3, 8, 4, 9, 1, 6, 2, 7 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    auto start1 = chrono::high_resolution_clock::now();
+    BubbleSortFunc(arr, n);
+    auto end1 = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duration1 = end1 - start1;
+    cout << "버블 정렬: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n실행시간: " << duration1.count() << " ms\n\n";
+
+    int list1[] = { 40, 23, 55, 4, 6, 77, 19 };
+    int size1 = sizeof(list1) / sizeof(list1[0]);
+    int* sorted = new int[size1];
+    auto start2 = chrono::high_resolution_clock::now();
+    MergeSort(list1, 0, size1 - 1, sorted);
+    auto end2 = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duration2 = end2 - start2;
+    cout << "병합 정렬: ";
+    for (int i = 0; i < size1; i++) {
+        cout << list1[i] << " ";
+    }
+    cout << "\n실행시간: " << duration2.count() << " ms\n\n";
+
+    int list2[] = { 38, 7, 16, 25, 3, 62 };
+    int size2 = sizeof(list2) / sizeof(list2[0]);
+    auto start3 = chrono::high_resolution_clock::now();
+    QuickSort(list2, 0, size2 - 1);
+    auto end3 = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duration3 = end3 - start3;
+    cout << "퀵 정렬: ";
+    for (int i = 0; i < size2; i++) {
+        cout << list2[i] << " ";
+    }
+    cout << "\n실행시간: " << duration3.count() << " ms\n";
+
+    delete[] sorted;
+    return 0;
+}
