@@ -1,10 +1,12 @@
 #include <iostream>
+#include <chrono>
+
 using namespace std;
 
 void Merge(int list[], int left, int mid, int right, int sorted[]) {
-    int i = left, j = mid + 1, k = left;
+    int i = left, j = mid + 1, k = left; 
 
-    while (i <= mid && j <= right) {
+    while (i <= mid && j <= right) { 
         if (list[i] <= list[j])
             sorted[k++] = list[i++];
         else
@@ -25,6 +27,7 @@ void Merge(int list[], int left, int mid, int right, int sorted[]) {
     }
 }
 
+// 병합 정렬 함수
 void MergeSort(int list[], int left, int right, int sorted[]) {
     if (left < right) {
         int mid = (left + right) / 2;
@@ -37,15 +40,25 @@ void MergeSort(int list[], int left, int right, int sorted[]) {
 int main() {
     int list[] = { 40, 23, 55, 4, 6, 77, 19 };
     int size = sizeof(list) / sizeof(list[0]);
-    int* sorted = new int[size];
+    int* sorted = new int[size]; 
+
+    auto start = chrono::high_resolution_clock::now();
 
     MergeSort(list, 0, size - 1, sorted);
+
+    auto end = chrono::high_resolution_clock::now();
+
+    chrono::duration<double, milli> duration = end - start;
+
     cout << "정렬된 배열: ";
     for (int i = 0; i < size; i++) {
         cout << list[i] << " ";
     }
     cout << endl;
 
+    cout << "실행시간: " << duration.count() << " ms" << endl;
+
     delete[] sorted;
+
     return 0;
 }
